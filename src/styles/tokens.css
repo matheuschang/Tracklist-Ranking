@@ -87,5 +87,5 @@
      NB: derive card/well height inline from these (in base.css), never as a
      :root-level calc token — that would freeze the mobile override out. */
   --card-size: 96px;         /* square artwork edge = card width */
-  --meta-h: 56px;            /* fixed height of the title/artist block */
+  --meta-h: 66px;            /* fixed height: fits a 2-line title + artist + duration */
 }

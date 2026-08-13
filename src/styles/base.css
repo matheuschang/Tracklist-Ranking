@@ -810,7 +810,7 @@ button {
 @media (max-width: 520px) {
   .rack {
     --card-size: 84px;
-    --meta-h: 52px;
+    --meta-h: 66px;
   }
   .tier {
     grid-template-columns: 44px 1fr;
