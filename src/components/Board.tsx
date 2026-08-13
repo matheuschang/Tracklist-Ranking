@@ -3,7 +3,7 @@ import {
   DndContext,
   DragOverlay,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
   TouchSensor,
   closestCenter,
   getFirstCollision,
@@ -28,7 +28,7 @@ type ContainerId = 'bench' | `tier-${number}`;
 
 const TIER_META = [
   { accent: 'var(--tier-s)', empty: 'Reserved for the ones you’d defend to a stranger.' },
-  { accent: 'var(--tier-a)', empty: 'Great — a hair short of untouchable.' },
+  { accent: 'var(--tier-a)', empty: 'Great. It always gets you on the right mood.' },
   { accent: 'var(--tier-b)', empty: 'Solid. You’d never skip these.' },
   { accent: 'var(--tier-c)', empty: 'Fine. Depends on the day.' },
   { accent: 'var(--tier-d)', empty: 'The ones your thumb finds the skip button for.' },
@@ -89,9 +89,12 @@ export function Board() {
     return [{ id: lastOverId.current }];
   }, [activeTrack]);
 
+  // Mouse + Touch kept separate (PointerSensor would grab both and the two
+  // gestures fight on phones). Touch needs a press-and-hold so a plain swipe on
+  // a card still scrolls the page; mouse drags start after a tiny move.
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 5 } }),
+    useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 180, tolerance: 8 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 

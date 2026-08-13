@@ -602,7 +602,10 @@ button {
   border-radius: var(--radius);
   box-shadow: var(--inset-well);
   overflow: hidden;
-  touch-action: manipulation;
+  /* none = the card owns the touch gesture so a press-and-hold drags reliably
+     instead of the browser hijacking it to scroll. Scroll the page from the
+     empty tier space / header / gaps. */
+  touch-action: none;
   user-select: none;
 }
 .card:focus-visible {
