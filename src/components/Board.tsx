@@ -3,6 +3,7 @@ import {
   DndContext,
   DragOverlay,
   KeyboardSensor,
+  MeasuringStrategy,
   MouseSensor,
   TouchSensor,
   closestCenter,
@@ -134,6 +135,7 @@ export function Board() {
     <DndContext
       sensors={sensors}
       collisionDetection={collisionDetection}
+      measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}

@@ -65,7 +65,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   min-width: 0;
   flex: 1 1 200px;
 }
@@ -75,22 +75,22 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  font-size: clamp(15px, 2.4vw, 20px);
-  line-height: 1;
+  font-size: 28px;
+  line-height: 1.02;
   color: var(--ink);
 }
 
 .brand__model {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--ink-faint);
   text-transform: uppercase;
 }
 
 .brand__source {
-  margin-top: 2px;
-  font-size: 12px;
+  margin-top: 3px;
+  font-size: 17px;
   color: var(--ink-soft);
   white-space: nowrap;
   overflow: hidden;
@@ -824,11 +824,25 @@ button {
 .faceplate.is-exporting .vu {
   width: 220px;
 }
+.faceplate.is-exporting .brand__wordmark {
+  font-size: 28px;
+}
+.faceplate.is-exporting .brand__source {
+  font-size: 17px;
+}
 .faceplate.is-exporting .tier {
   grid-template-columns: 58px 1fr;
 }
 .faceplate.is-exporting .tier__grade {
   font-size: 26px;
+}
+/* Keep the desktop single-row look in the export even if the phone wraps. */
+.faceplate.is-exporting .tier__well {
+  align-items: center;
+}
+.faceplate.is-exporting .tier__lane {
+  flex-wrap: nowrap;
+  overflow: visible;
 }
 
 /* ---- Motion ------------------------------------------------------------ */
@@ -855,5 +869,20 @@ button {
   }
   .vu {
     width: 100%;
+  }
+  .brand__wordmark {
+    font-size: 24px;
+  }
+  .brand__source {
+    font-size: 16px;
+  }
+  /* Cards wrap into multiple rows so the whole tier is visible at a glance
+     (no horizontal scrolling inside a tier). Desktop keeps the single scroll row. */
+  .tier__well {
+    align-items: flex-start;
+  }
+  .tier__lane {
+    flex-wrap: wrap;
+    overflow: visible;
   }
 }
