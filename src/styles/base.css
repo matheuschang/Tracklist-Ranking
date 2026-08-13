@@ -810,6 +810,26 @@ button {
 .faceplate.is-exporting .card__ignore {
   display: none;
 }
+/* Always capture at desktop sizing — even from a phone — so the PNG is a wide
+   horizontal frame instead of a tall mobile column. Overrides the mobile
+   media query for the duration of the capture. */
+.faceplate.is-exporting {
+  width: 1080px;
+  --card-size: 96px;
+  --meta-h: 66px;
+}
+.faceplate.is-exporting .header {
+  flex-direction: row;
+}
+.faceplate.is-exporting .vu {
+  width: 220px;
+}
+.faceplate.is-exporting .tier {
+  grid-template-columns: 58px 1fr;
+}
+.faceplate.is-exporting .tier__grade {
+  font-size: 26px;
+}
 
 /* ---- Motion ------------------------------------------------------------ */
 @media (prefers-reduced-motion: no-preference) {

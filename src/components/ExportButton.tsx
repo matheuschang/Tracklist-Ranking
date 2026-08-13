@@ -26,8 +26,11 @@ export function ExportButton() {
     setFailed(false);
     setExporting(true); // collapse the load bar + hide bench/toolbar for the frame
     node.classList.add('is-exporting');
-    // let the collapsed layout paint before capture
+    // Let the export layout settle. On a phone this reflows the whole board
+    // from the narrow mobile column to the wide desktop frame, so give it a
+    // couple of frames plus a beat before capturing.
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await new Promise((r) => setTimeout(r, 90));
     try {
       const dataUrl = await toPng(node, {
         pixelRatio: 2,
