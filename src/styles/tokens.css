@@ -1,0 +1,91 @@
+/*
+ * tokens.css — THE ONLY file that defines the visual direction.
+ * Committed direction: Japanese hi-fi separates, circa 1978.
+ * Brushed champagne-aluminium faceplate, walnut end cheeks,
+ * silkscreened labels, amber + teal indicator lamps.
+ *
+ * Nothing outside this file may contain a literal colour or font name.
+ * Swapping the whole look should mean editing only this file.
+ */
+
+:root {
+  /* ---- Palette --------------------------------------------------------- */
+  --faceplate: #c9c4b8;        /* champagne aluminium, the primary ground */
+  --faceplate-hi: #d6d1c6;     /* brushed highlight band */
+  --faceplate-lo: #b8b2a4;     /* brushed shadow band */
+  --faceplate-recess: #a79f91; /* recessed wells where cards sit */
+  --faceplate-recess-lo: #948c7e;
+  --walnut: #5a3b26;           /* frame / end cheeks */
+  --walnut-hi: #6e4a30;
+  --walnut-lo: #40291a;
+  --ink: #22201c;              /* silkscreen text */
+  --ink-soft: #4b463d;         /* secondary silkscreen */
+  --ink-faint: #6f695d;        /* tertiary / disabled silkscreen */
+  --engrave: #8f8778;          /* engraved rule lines */
+  --lamp-amber: #e8a33d;       /* active tier, meter needle */
+  --lamp-amber-glow: rgba(232, 163, 61, 0.55);
+  --lamp-teal: #4fb3a5;        /* secondary indicator, focus ring */
+  --lamp-teal-glow: rgba(79, 179, 165, 0.5);
+  --lamp-off: #6b6456;         /* unlit lamp */
+  --card-ground: #ece8df;      /* card face when artwork missing */
+  --danger: #b4472e;           /* error copy */
+
+  /* Tier accent lamps, top to bottom */
+  --tier-s: #e8a33d;
+  --tier-a: #d9b657;
+  --tier-b: #a7b06a;
+  --tier-c: #6fa6a0;
+  --tier-d: #7f95ab;
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-label: 'Archivo Narrow', 'Archivo', system-ui, sans-serif; /* silkscreen labels */
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --tracking-label: 0.16em;
+  --tracking-wide: 0.28em;
+
+  /* ---- Surfaces & texture --------------------------------------------- */
+  /* Brushed metal: fine 1px vertical striations over a broad gradient. */
+  --brushed:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 1px,
+      rgba(0, 0, 0, 0.02) 1px,
+      rgba(0, 0, 0, 0.02) 2px
+    ),
+    linear-gradient(180deg, var(--faceplate-hi) 0%, var(--faceplate) 45%, var(--faceplate-lo) 100%);
+  --brushed-recess:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      rgba(0, 0, 0, 0.03) 1px,
+      rgba(0, 0, 0, 0.03) 2px
+    ),
+    linear-gradient(180deg, var(--faceplate-recess-lo) 0%, var(--faceplate-recess) 100%);
+  --walnut-grain:
+    linear-gradient(180deg, var(--walnut-hi) 0%, var(--walnut) 40%, var(--walnut-lo) 100%);
+
+  /* ---- Depth (kept minimal — 1px insets, no soft shadows) -------------- */
+  --inset-well: inset 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+  --inset-plate: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.28);
+  --edge-raised: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  --lift: 0 6px 14px rgba(0, 0, 0, 0.28); /* only while a card is dragged */
+
+  /* ---- Geometry -------------------------------------------------------- */
+  --radius-sm: 2px;
+  --radius: 3px;
+  --radius-bezel: 6px; /* only the meter bezel goes above 3px */
+  --hairline: 1px;
+  --rack-gap: 10px;
+  --touch-min: 44px;
+
+  /* Card + well sizing. Cards are a FIXED height and every well reserves that
+     height, so moving a card between tiers never resizes a row — which is what
+     keeps drag-and-drop from shifting targets under the cursor.
+     NB: derive card/well height inline from these (in base.css), never as a
+     :root-level calc token — that would freeze the mobile override out. */
+  --card-size: 96px;         /* square artwork edge = card width */
+  --meta-h: 56px;            /* fixed height of the title/artist block */
+}

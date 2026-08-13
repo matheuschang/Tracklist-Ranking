@@ -1,0 +1,824 @@
+/* base.css — layout & component styling. Colours/fonts come from tokens.css only. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--walnut-grain) fixed;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--lamp-teal);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- App frame: a rack unit with walnut cheeks ------------------------- */
+.rack {
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: clamp(10px, 3vw, 22px);
+  padding-left: max(clamp(10px, 3vw, 22px), env(safe-area-inset-left));
+  padding-right: max(clamp(10px, 3vw, 22px), env(safe-area-inset-right));
+}
+
+.faceplate {
+  background: var(--brushed);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius);
+  box-shadow: var(--edge-raised), 0 2px 0 rgba(0, 0, 0, 0.35);
+  padding: clamp(12px, 2.4vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rack-gap);
+  min-width: 0;
+}
+
+/* ---- Header ------------------------------------------------------------ */
+.header {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(10px, 2.4vw, 20px);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.brand__wordmark {
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-size: clamp(15px, 2.4vw, 20px);
+  line-height: 1;
+  color: var(--ink);
+}
+
+.brand__model {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.brand__source {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.brand__source strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---- Engraved silkscreen label ---------------------------------------- */
+.silk {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-size: 11px;
+}
+
+/* ---- Indicator lamp ---------------------------------------------------- */
+.lamp {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lamp-off);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  flex: 0 0 auto;
+  transition: background 160ms ease, box-shadow 160ms ease;
+}
+.lamp--amber.is-on {
+  background: var(--lamp-amber);
+  box-shadow: 0 0 6px var(--lamp-amber-glow), inset 0 0 1px rgba(255, 255, 255, 0.6);
+}
+.lamp--teal.is-on {
+  background: var(--lamp-teal);
+  box-shadow: 0 0 6px var(--lamp-teal-glow), inset 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+/* ---- VU meter ---------------------------------------------------------- */
+.vu {
+  flex: 0 0 auto;
+  width: clamp(150px, 30vw, 220px);
+  background: var(--brushed-recess);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius-bezel);
+  box-shadow: var(--inset-well);
+  padding: 8px 10px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vu__face {
+  width: 100%;
+  display: block;
+}
+.vu__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.vu__legend {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+.vu__count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ---- Link bar ---------------------------------------------------------- */
+.linkbar {
+  display: flex;
+  flex-direction: column;
+  background: var(--brushed-recess);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-well);
+}
+.linkbar__head {
+  display: flex;
+  align-items: center;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  padding: 7px 12px;
+}
+.linkbar:not(.is-collapsed) .linkbar__head {
+  border-bottom: 1px solid var(--faceplate-recess-lo);
+}
+.linkbar__titlebtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--touch-min);
+  padding: 0 2px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+}
+.linkbar__chevron-btn {
+  min-height: var(--touch-min);
+  min-width: 30px;
+  padding: 0 6px;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.linkbar__spacer {
+  flex: 1 1 auto;
+}
+.linkbar__folded {
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55vw;
+}
+.linkbar__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 12px 12px;
+}
+.linkbar__row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.field {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 0;
+  display: flex;
+  background: var(--card-ground);
+  border: 1px solid var(--faceplate-recess-lo);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--inset-well);
+}
+.field__paste {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-size: 10px;
+  color: var(--ink-faint);
+  background: var(--faceplate-hi);
+  border: 1px solid var(--faceplate-recess-lo);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--edge-raised);
+  padding: 5px 9px;
+  opacity: 0.72;
+  transition: opacity 140ms ease, color 140ms ease;
+}
+.field__paste:hover,
+.field__paste:focus-visible {
+  opacity: 1;
+  color: var(--ink);
+}
+.field__paste:active {
+  box-shadow: var(--inset-plate);
+}
+.field input,
+.field textarea {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 10px 11px;
+  resize: vertical;
+}
+.field textarea {
+  min-height: 88px;
+  line-height: 1.5;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-faint);
+}
+
+/* ---- Buttons: hardware push-keys, quiet -------------------------------- */
+.btn {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--brushed);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--edge-raised);
+  padding: 0 16px;
+  min-height: var(--touch-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.btn:active {
+  box-shadow: var(--inset-plate);
+  transform: translateY(1px);
+}
+.btn:disabled {
+  color: var(--ink-faint);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.btn--ghost {
+  background: transparent;
+  box-shadow: none;
+  border-color: var(--engrave);
+}
+.btn--primary .btn__lamp {
+  color: var(--lamp-amber);
+}
+
+.linkbar__hint {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+}
+
+/* ---- Rank mode selector (analog panel switch) -------------------------- */
+.mode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.mode__label {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+/* Recessed housing the two push-buttons sit inside. */
+.mode__switch {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  background: var(--brushed-recess);
+  border: 1px solid var(--walnut-lo);
+  border-radius: 4px;
+  box-shadow: var(--inset-well);
+}
+.mode__opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 13px;
+  background: var(--brushed);
+  border: 1px solid var(--walnut-lo);
+  border-radius: 2px;
+  box-shadow: var(--edge-raised);
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--ink-faint);
+  transition: color 140ms ease, box-shadow 120ms ease, transform 60ms ease;
+}
+.mode__opt:active {
+  transform: translateY(0.5px);
+}
+/* Pressed-in + pilot lamp lit = the selected mode. */
+.mode__opt.is-on {
+  color: var(--ink);
+  background: var(--faceplate-recess);
+  box-shadow: var(--inset-plate);
+}
+.mode__lamp {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lamp-off);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  flex: 0 0 auto;
+  transition: background 140ms ease, box-shadow 140ms ease;
+}
+.mode__opt.is-on .mode__lamp {
+  background: var(--lamp-amber);
+  box-shadow: 0 0 5px var(--lamp-amber-glow), inset 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+/* ---- Album search results --------------------------------------------- */
+.results {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--card-ground);
+  border: 1px solid var(--faceplate-recess-lo);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--inset-well);
+}
+.result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 8px;
+  min-height: var(--touch-min);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  color: var(--ink);
+}
+.result:hover,
+.result:focus-visible {
+  background: var(--faceplate-hi);
+}
+.result__art {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--faceplate-recess);
+  box-shadow: var(--inset-well);
+}
+.result__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.result__meta {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.result__name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.result__artist {
+  font-size: 11px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.result__tail {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.linkbar__error {
+  font-size: 12px;
+  color: var(--danger);
+  font-family: var(--font-body);
+}
+
+/* ---- Board ------------------------------------------------------------- */
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---- Tier row ---------------------------------------------------------- */
+.tier {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 6px;
+  align-items: stretch;
+}
+.tier__plate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--brushed-recess);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-plate);
+  padding: 8px 4px;
+}
+.tier__grade {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--ink);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.tier__accent {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--tier-accent, var(--lamp-off));
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.4);
+}
+.tier__well {
+  position: relative;
+  background: var(--brushed-recess);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-well);
+  padding: 6px;
+  min-height: calc(var(--card-size) + var(--meta-h) + 12px);
+  display: flex;
+  align-items: center;
+}
+.tier__well.is-over {
+  outline: 2px solid var(--lamp-teal);
+  outline-offset: -2px;
+}
+.tier__lane {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+.tier__empty {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-style: italic;
+  padding: 0 6px;
+  user-select: none;
+}
+
+/* ---- Bench ------------------------------------------------------------- */
+.bench {
+  margin-top: 4px;
+}
+.bench__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.bench__well {
+  background: var(--brushed-recess);
+  border: 1px solid var(--walnut-lo);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-well);
+  padding: 8px;
+  min-height: 116px;
+}
+.bench__well.is-over {
+  outline: 2px solid var(--lamp-teal);
+  outline-offset: -2px;
+}
+.bench__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bench__empty {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-faint);
+  padding: 12px 4px;
+}
+
+/* ---- Track card -------------------------------------------------------- */
+.card {
+  position: relative;
+  width: var(--card-size);
+  height: calc(var(--card-size) + var(--meta-h));
+  flex: 0 0 auto;
+  background: var(--card-ground);
+  border: 1px solid var(--faceplate-recess-lo);
+  border-radius: var(--radius);
+  box-shadow: var(--inset-well);
+  overflow: hidden;
+  touch-action: manipulation;
+  user-select: none;
+}
+.card:focus-visible {
+  outline: 2px solid var(--lamp-teal);
+  outline-offset: 1px;
+}
+.card.is-dragging {
+  opacity: 0.35;
+}
+.card__art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--faceplate-recess);
+  display: block;
+}
+.card__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.card__art--type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+.card__art--type span {
+  font-family: var(--font-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  text-align: center;
+  color: var(--ink-soft);
+  line-height: 1.1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card__num {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--card-ground);
+  background: rgba(34, 32, 28, 0.72);
+  border-radius: 2px;
+  padding: 1px 4px;
+  line-height: 1.2;
+}
+
+/* Ignore-in-score toggle, top-right of the artwork. */
+.card__ignore {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--card-ground);
+  background: rgba(34, 32, 28, 0.6);
+  border: 0;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 120ms ease, background 120ms ease, color 120ms ease;
+}
+/* Reveal only on hover, or when the card is focused (covers touch: a tap
+   focuses the card first). Stays hidden otherwise — nice and discreet. */
+.card:hover .card__ignore,
+.card:focus-within .card__ignore,
+.card__ignore:focus-visible {
+  opacity: 0.85;
+  pointer-events: auto;
+}
+.card.is-excluded .card__ignore {
+  opacity: 1;
+  pointer-events: auto;
+  background: var(--lamp-amber);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Ignored card: greyed out and faded, but the toggle stays crisp. */
+.card.is-excluded {
+  border-style: dashed;
+  border-color: var(--engrave);
+}
+.card.is-excluded .card__art img,
+.card.is-excluded .card__art--type span {
+  opacity: 0.32;
+  filter: grayscale(0.9);
+}
+.card.is-excluded .card__num {
+  opacity: 0.4;
+}
+.card.is-excluded .card__meta {
+  opacity: 0.42;
+  filter: grayscale(0.85);
+}
+.card__meta {
+  height: var(--meta-h);
+  padding: 4px 5px 5px;
+  overflow: hidden;
+}
+.card__title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.15;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.card__artist {
+  margin-top: 1px;
+  font-size: 10px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card__dur {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+
+/* Drag overlay clone gets the lift; on-board cards stay flat. */
+.card--overlay {
+  box-shadow: var(--lift);
+  opacity: 1;
+  cursor: grabbing;
+}
+
+/* ---- Toolbar ----------------------------------------------------------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.toolbar__spacer {
+  flex: 1 1 auto;
+}
+.url-meter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.url-meter.is-warn {
+  color: var(--danger);
+}
+
+/* ---- Footer note ------------------------------------------------------- */
+.footnote {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-align: center;
+  padding: 6px 0 2px;
+  letter-spacing: 0.06em;
+}
+
+/* ---- PNG export -------------------------------------------------------- */
+[data-export-only] {
+  display: none;
+}
+/* The whole faceplate is captured, but interactive chrome is stripped so the
+   image is just the header (title + VU meter) and the ranked tiers. The load
+   bar is forced collapsed (via the `exporting` flag) rather than hidden. */
+.faceplate.is-exporting .bench,
+.faceplate.is-exporting .toolbar {
+  display: none;
+}
+.faceplate.is-exporting .card__ignore {
+  display: none;
+}
+
+/* ---- Motion ------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: box-shadow 140ms ease;
+  }
+}
+
+/* ---- Small screens ----------------------------------------------------- */
+@media (max-width: 520px) {
+  .rack {
+    --card-size: 84px;
+    --meta-h: 52px;
+  }
+  .tier {
+    grid-template-columns: 44px 1fr;
+  }
+  .tier__grade {
+    font-size: 21px;
+  }
+  .header {
+    flex-direction: column;
+  }
+  .vu {
+    width: 100%;
+  }
+}
