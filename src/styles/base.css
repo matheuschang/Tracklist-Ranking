@@ -180,11 +180,13 @@ button {
   box-shadow: var(--inset-well);
 }
 .linkbar__head {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px 12px;
   flex-wrap: wrap;
   padding: 7px 12px;
+  padding-right: 42px; /* room for the pinned chevron */
 }
 .linkbar:not(.is-collapsed) .linkbar__head {
   border-bottom: 1px solid var(--faceplate-recess-lo);
@@ -201,13 +203,20 @@ button {
   text-align: left;
 }
 .linkbar__chevron-btn {
+  position: absolute;
+  top: 0;
+  right: 4px;
   min-height: var(--touch-min);
-  min-width: 30px;
-  padding: 0 6px;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
   background: transparent;
   border: 0;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 17px;
+  line-height: 1;
   color: var(--ink-soft);
 }
 .linkbar__spacer {
