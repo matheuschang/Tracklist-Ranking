@@ -541,6 +541,9 @@ button {
   box-shadow: var(--inset-well);
   padding: 6px;
   min-height: calc(var(--card-size) + var(--meta-h) + 12px);
+  /* min-width:0 lets the grid track shrink to the viewport so the lane scrolls
+     horizontally instead of the whole row overflowing the page on mobile. */
+  min-width: 0;
   display: flex;
   align-items: center;
 }
